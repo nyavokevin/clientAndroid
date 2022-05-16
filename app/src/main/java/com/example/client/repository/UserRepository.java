@@ -6,17 +6,21 @@ import com.example.client.models.User;
 import com.example.client.services.AuthService;
 
 public class UserRepository {
-    private AuthService authService = AuthService.getInstance();
+    Context context;
 
     private static UserRepository userRepository = null;
 
+    public UserRepository(Context context) {
+        this.context = context;
+    }
+    private AuthService authService = AuthService.getInstance(this.context);
     /**
      * creation singleTon instance pour UserRepository
      * @return
      */
-    public static synchronized UserRepository getInstance(){
+    public static synchronized UserRepository getInstance(Context context){
         if(null == userRepository){
-            userRepository = new UserRepository();
+            userRepository = new UserRepository(context);
         }
         return userRepository;
     }

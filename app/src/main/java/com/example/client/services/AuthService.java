@@ -3,6 +3,7 @@ package com.example.client.services;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -12,6 +13,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.client.GlobalProperties;
 import com.example.client.models.User;
+import com.example.client.utils.ServerCallback;
+import com.example.client.utils.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,15 +27,21 @@ import java.util.Map;
 public class AuthService {
     String baseUrl = GlobalProperties.getInstance().getBASE_URL();
 
+    VolleySingleton volleySingleton = VolleySingleton.getInstance();
+    Context context;
     private static AuthService authService = null;
+
+    public AuthService(Context context) {
+        this.context = context;
+    }
 
     /**
      * creation singleTon instance pour AuthService
      * @return
      */
-    public static synchronized AuthService getInstance(){
+    public static synchronized AuthService getInstance(Context context){
         if(null == authService){
-            authService = new AuthService();
+            authService = new AuthService(context);
         }
         return authService;
     }
@@ -63,18 +72,18 @@ public class AuthService {
      */
     public User functionLogin(Context context, User user){
         try{
-            User userConnected = new User();
-            RequestQueue queue = Volley.newRequestQueue(context);
+            final User[] userConnected = {new User()};
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, baseUrl + "/login",null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try{
                                 JSONObject ja = response.getJSONObject("user");
-                                userConnected.setFirstname(ja.getString("fullname"));
-                                userConnected.setLastname(ja.getString("fullname"));
-                                userConnected.setEmail(ja.getString("email"));
-                                System.out.println(userConnected.getEmail());
+                                userConnected[0].setFirstname(ja.getString("fullname"));
+                                userConnected[0].setLastname(ja.getString("fullname"));
+                                userConnected[0].setEmail(ja.getString("email"));
+                                Log.d("Fullname",ja.getString("fullname"));
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -82,7 +91,8 @@ public class AuthService {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println(error);
+                    error.printStackTrace();
+                    userConnected[0] = null;
                 }
             }){
                 @Override
@@ -102,12 +112,20 @@ public class AuthService {
                     return "application/json";
                 }
             };
-            queue.add(request);
-            return  userConnected;
+            request.setRetryPolicy(new DefaultRetryPolicy(500000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            volleySingleton.addToRequestQueue(request);
+            System.out.println(userConnected[0].getEmail());
+            return userConnected[0];
         }catch (Exception e){
             e.printStackTrace();
             return  null;
         }
+    }
+
+    public User callBackLogin(User user){
+        return user;
     }
 
     /**

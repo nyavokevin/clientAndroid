@@ -3,6 +3,7 @@ package com.example.client.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,16 +17,19 @@ import com.example.client.R;
 import com.example.client.models.User;
 import com.example.client.repository.UserRepository;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
-
+    public static final String KEY_CONNECTIONS = "KEY_CONNECTIONS";
     private static Boolean canLog = false;
     private String email;
     private String password;
 
+    UserRepository userRepository = UserRepository.getInstance(this);
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,14 +101,22 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View v){
         try {
             if(validate()){
-                UserRepository test = new UserRepository();
                 EditText emailTextInput = (EditText)  findViewById(R.id.emailInput);
                 EditText passwordTextInput = (EditText) findViewById(R.id.passwordInput);
                 User userLog = new User( String.valueOf(emailTextInput.getText()), String.valueOf(passwordTextInput.getText()));
-                User val = test.login(this, userLog);
+                User val = userRepository.login(this, userLog);
+                System.out.println(val);
                 if(val != null){
-                    Intent homePage = new Intent(this, HomeActivity.class);
-                    startActivity(homePage);
+                    //save the userObject JSON at Preferences
+                    SharedPreferences sh = getSharedPreferences("UserPref", MODE_PRIVATE);
+                    SharedPreferences.Editor logginEdit = sh.edit();
+                    Gson gson = new Gson();
+                    String json = gson.toJson(val);
+                    logginEdit.putString("userLogged", json);
+                    logginEdit.apply();
+//
+//                    Intent homePage = new Intent(this, HomeActivity.class);
+//                    startActivity(homePage);
                 }
             }else{
                 TextView errorText = (TextView) findViewById(R.id.errorText);

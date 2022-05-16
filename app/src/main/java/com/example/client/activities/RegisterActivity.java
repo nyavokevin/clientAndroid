@@ -86,9 +86,8 @@ public class RegisterActivity extends AppCompatActivity {
         EditText passwordEditText = (EditText) findViewById(R.id.passwordEditTextRegister);
         EditText arrayEditText[] = new EditText[] {firstNameEditText,lastNameEditText,emailEditText,passwordEditText};
         try{
-            Log.d("ATO","AYOOO");
             if(validate(arrayEditText)) {
-                UserRepository repo = UserRepository.getInstance();
+                UserRepository repo = UserRepository.getInstance(this);
                 User userTemp = new User(
                         String.valueOf(emailEditText.getText()),
                         String.valueOf(passwordEditText.getText()),
@@ -96,8 +95,6 @@ public class RegisterActivity extends AppCompatActivity {
                         String.valueOf(lastNameEditText.getText())
                 );
                 repo.register(this, userTemp);
-            }else{
-                Log.d("validate", "Tsy mety");
             }
         }catch (Exception e){
             e.printStackTrace();
