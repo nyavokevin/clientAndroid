@@ -2,6 +2,7 @@ package com.example.client.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,12 +13,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.client.GlobalProperties;
 import com.example.client.R;
 import com.example.client.models.User;
 import com.example.client.repository.UserRepository;
+import com.example.client.utils.VolleySingleton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,8 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     private static Boolean canLog = false;
     private String email;
     private String password;
-
-    UserRepository userRepository = UserRepository.getInstance(this);
+    private static String baseURL = GlobalProperties.getInstance().getBASE_URL();
+    public static Context context = null;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
+        context = getApplicationContext();
     }
 
     private boolean validate(){
@@ -103,21 +115,57 @@ public class LoginActivity extends AppCompatActivity {
             if(validate()){
                 EditText emailTextInput = (EditText)  findViewById(R.id.emailInput);
                 EditText passwordTextInput = (EditText) findViewById(R.id.passwordInput);
+                TextView errorText = (TextView) findViewById(R.id.errorText);
                 User userLog = new User( String.valueOf(emailTextInput.getText()), String.valueOf(passwordTextInput.getText()));
-                User val = userRepository.login(this, userLog);
-                System.out.println(val);
-                if(val != null){
-                    //save the userObject JSON at Preferences
-                    SharedPreferences sh = getSharedPreferences("UserPref", MODE_PRIVATE);
-                    SharedPreferences.Editor logginEdit = sh.edit();
-                    Gson gson = new Gson();
-                    String json = gson.toJson(val);
-                    logginEdit.putString("userLogged", json);
-                    logginEdit.apply();
-//
-//                    Intent homePage = new Intent(this, HomeActivity.class);
-//                    startActivity(homePage);
+                // Utilisation de volley request
+                VolleySingleton volleySingleton = VolleySingleton.getInstance(this);
+                try{
+                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,  baseURL+ "/login",null,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try{
+                                        JSONObject ja = response.getJSONObject("user");
+                                        Log.e("response", ja.getString("fullname"));
+                                        Toast.makeText(LoginActivity.this, "Logged", Toast.LENGTH_SHORT).show();
+                                        Intent homePage = new Intent(getApplicationContext(), HomeActivity.class);
+                                        startActivity(homePage);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            errorText.setVisibility(View.INVISIBLE);
+                        }
+                    }){
+                        @Override
+                        public byte[] getBody(){
+                            JSONObject obj = new JSONObject();
+                            try {
+                                obj.put("login",String.valueOf(emailTextInput.getText()));
+                                obj.put("password",String.valueOf(passwordTextInput.getText()));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            return obj.toString().getBytes();
+                        }
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json";
+                        }
+                    };
+                    request.setRetryPolicy(new DefaultRetryPolicy(500000,
+                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    volleySingleton.addToRequestQueue(request);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(this, "Exception server", Toast.LENGTH_SHORT).show();
                 }
+
             }else{
                 TextView errorText = (TextView) findViewById(R.id.errorText);
                 errorText.setVisibility(View.VISIBLE);

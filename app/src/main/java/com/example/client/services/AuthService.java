@@ -27,7 +27,6 @@ import java.util.Map;
 public class AuthService {
     String baseUrl = GlobalProperties.getInstance().getBASE_URL();
 
-    VolleySingleton volleySingleton = VolleySingleton.getInstance();
     Context context;
     private static AuthService authService = null;
 
@@ -48,7 +47,6 @@ public class AuthService {
 
     public void loadRestaurantTest(Context context){
         RequestQueue queue = Volley.newRequestQueue(context);
-
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, baseUrl+"/restaurant",
                 new Response.Listener<String>() {
@@ -82,8 +80,6 @@ public class AuthService {
                                 userConnected[0].setFirstname(ja.getString("fullname"));
                                 userConnected[0].setLastname(ja.getString("fullname"));
                                 userConnected[0].setEmail(ja.getString("email"));
-                                Log.d("Fullname",ja.getString("fullname"));
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -104,7 +100,6 @@ public class AuthService {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(obj);
                     return obj.toString().getBytes();
                 }
                 @Override
@@ -115,8 +110,6 @@ public class AuthService {
             request.setRetryPolicy(new DefaultRetryPolicy(500000,
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            volleySingleton.addToRequestQueue(request);
-            System.out.println(userConnected[0].getEmail());
             return userConnected[0];
         }catch (Exception e){
             e.printStackTrace();

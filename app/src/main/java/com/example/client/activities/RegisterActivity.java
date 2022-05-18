@@ -8,14 +8,28 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.client.GlobalProperties;
 import com.example.client.R;
 import com.example.client.models.User;
 import com.example.client.repository.UserRepository;
+import com.example.client.utils.VolleySingleton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    public static String baseUrl = GlobalProperties.getInstance().getBASE_URL();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +100,55 @@ public class RegisterActivity extends AppCompatActivity {
         EditText passwordEditText = (EditText) findViewById(R.id.passwordEditTextRegister);
         EditText arrayEditText[] = new EditText[] {firstNameEditText,lastNameEditText,emailEditText,passwordEditText};
         try{
+            VolleySingleton volleySingleton = VolleySingleton.getInstance(this);
             if(validate(arrayEditText)) {
-                UserRepository repo = UserRepository.getInstance(this);
-                User userTemp = new User(
-                        String.valueOf(emailEditText.getText()),
-                        String.valueOf(passwordEditText.getText()),
-                        String.valueOf(firstNameEditText.getText()),
-                        String.valueOf(lastNameEditText.getText())
-                );
-                repo.register(this, userTemp);
+                try{
+                    StringRequest request = new StringRequest(Request.Method.POST, baseUrl + "/register",
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        Log.e("response", jsonObject.getString("user"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            try {
+                                String responseBody = new String(error.networkResponse.data, "utf-8");
+                                JSONObject jsonObject = new JSONObject(responseBody);
+                                Toast.makeText(getApplicationContext(), "Eror on register", Toast.LENGTH_SHORT).show();
+                            } catch (UnsupportedEncodingException | JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }){
+                        @Override
+                        public byte[] getBody(){
+                            JSONObject obj = new JSONObject();
+                            try {
+                                obj.put("firstname",String.valueOf(firstNameEditText.getText()));
+                                obj.put("lastname",String.valueOf(lastNameEditText.getText()));
+                                obj.put("email",String.valueOf(emailEditText.getText()));
+                                obj.put("role","624f57ffefa3956f3481e631");
+                                obj.put("password",String.valueOf(passwordEditText.getText()));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            return obj.toString().getBytes();
+                        }
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json";
+                        }
+                    };
+                    volleySingleton.addToRequestQueue(request);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
