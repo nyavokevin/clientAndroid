@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -47,6 +49,15 @@ public class RegisterActivity extends AppCompatActivity {
         addValidatorEditText(emailEditText, "email");
         addValidatorEditText(passwordEditText, "text");
 
+        Spinner spinnerAge=findViewById(R.id.spinner3);
+        Spinner spinnerSexe = findViewById(R.id.spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.age, R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinnerAge.setAdapter(adapter);
+        ArrayAdapter<CharSequence> adapterSexe = ArrayAdapter.createFromResource(this, R.array.sexe, R.layout.support_simple_spinner_dropdown_item);
+        adapterSexe.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinnerSexe.setAdapter(adapter);
     }
 
 
@@ -99,6 +110,8 @@ public class RegisterActivity extends AppCompatActivity {
         EditText emailEditText = (EditText) findViewById(R.id.emailEditTextRegister);
         EditText passwordEditText = (EditText) findViewById(R.id.passwordEditTextRegister);
         EditText arrayEditText[] = new EditText[] {firstNameEditText,lastNameEditText,emailEditText,passwordEditText};
+        Spinner spinnerAge= (Spinner) findViewById(R.id.spinner3);
+        Spinner spinnerSexe = (Spinner)  findViewById(R.id.spinner);
         try{
             VolleySingleton volleySingleton = VolleySingleton.getInstance(this);
             if(validate(arrayEditText)) {
@@ -133,8 +146,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 obj.put("firstname",String.valueOf(firstNameEditText.getText()));
                                 obj.put("lastname",String.valueOf(lastNameEditText.getText()));
                                 obj.put("email",String.valueOf(emailEditText.getText()));
-                                obj.put("role","624f57ffefa3956f3481e631");
                                 obj.put("password",String.valueOf(passwordEditText.getText()));
+                                obj.put("age",spinnerAge.getSelectedItem().toString());
+                                obj.put("sexe",spinnerSexe.getSelectedItem().toString());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
