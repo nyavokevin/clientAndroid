@@ -52,4 +52,13 @@ public class HomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void redirectProfile(View v){
+        try{
+            Intent redirectProfile = new Intent(this, ProfileActivity.class);
+            startActivity(redirectProfile);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

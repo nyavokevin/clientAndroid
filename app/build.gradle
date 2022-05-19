@@ -44,4 +44,5 @@ dependencies {
     // This is used by the Google HTTP client library.
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
     implementation 'com.android.volley:volley:1.2.1'
+    implementation 'com.google.android.material:material:1.2.1'
 }

@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Client"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.RegisterActivity"
             android:exported="true" />
         <activity
