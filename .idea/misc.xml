@@ -3,23 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/drawable/bottom_navigation_colors.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/drawable/gradient_1.xml" value="0.2703125" />
         <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/activity_home.xml" value="0.176" />
         <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/activity_profile.xml" value="0.1265625" />
         <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/activity_register.xml" value="0.152" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/drawable/bg_app.xml" value="0.1" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/drawable/gradient_1.xml" value="0.1255" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/layout/activity_home.xml" value="0.2" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/layout/activity_profile.xml" value="0.1640378548895899" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/layout/fragment_first.xml" value="0.1" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/layout/fragment_home.xml" value="0.11458333333333333" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/layout/fragment_home_fragement.xml" value="0.1" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/layout/fragment_profile.xml" value="0.1082427536231884" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/layout/fragment_second.xml" value="0.1" />
-        <entry key="..\:/Users/nyavo/AndroidStudioProjects/ClientAndroid/app/src/main/res/menu/bottom_nav_menu.xml" value="0.22" />
+        <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/fragment_home.xml" value="0.1265625" />
+        <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/fragment_profile.xml" value="0.152" />
+        <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1265625" />
       </map>
     </option>
   </component>

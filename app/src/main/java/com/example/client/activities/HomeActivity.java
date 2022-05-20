@@ -18,6 +18,7 @@ import com.example.client.R;
 import com.example.client.fragments.HomeFragment;
 import com.example.client.fragments.ProfileFragment;
 import com.example.client.models.User;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,15 +28,20 @@ public class HomeActivity extends AppCompatActivity {
 
     SharedPreferences settings;
 
-    Button homeFrag, profileFrag;
+    BottomNavigationItemView bottomNavigationItemView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        getSupportActionBar().hide();
 
-        homeFrag = findViewById(R.id.fragment1btn);
-        profileFrag = findViewById(R.id.fragment2btn);
+        Button homeFrag = (Button) findViewById(R.id.homeButton);
+        Button profileFrag = (Button) findViewById(R.id.profileButton);
+
+        SharedPreferences sh = getSharedPreferences("auth",MODE_PRIVATE);
+        System.out.println("SHARED");
+        System.out.println(sh.getString("firstname",""));
 
         homeFrag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,9 +53,15 @@ public class HomeActivity extends AppCompatActivity {
         profileFrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(new ProfileFragment());
+                if(sh.contains("jsondata")) {
+                    replaceFragment(new ProfileFragment());
+                }else{
+                    Intent loginPage = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(loginPage);
+                }
             }
         });
+
     }
 
     public void replaceFragment(Fragment frag){

@@ -8,16 +8,22 @@ import android.view.WindowManager;
 
 import com.example.client.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ProfileActivity extends AppCompatActivity {
+
+    SharedPreferences sh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_profile);
+        sh=getSharedPreferences("auth",MODE_PRIVATE);
 
-        SharedPreferences sr = getSharedPreferences("auth", MODE_PRIVATE);
-        String firstname = sr.getString("firstname","");
-        System.out.println(firstname);
     }
+
+
+
 }

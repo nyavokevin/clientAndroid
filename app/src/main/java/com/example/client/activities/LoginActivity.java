@@ -27,6 +27,7 @@ import com.example.client.GlobalProperties;
 import com.example.client.R;
 import com.example.client.models.User;
 import com.example.client.repository.UserRepository;
+import com.example.client.services.AuthService;
 import com.example.client.utils.VolleySingleton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
@@ -45,14 +46,16 @@ public class LoginActivity extends AppCompatActivity {
     private String password;
     private static String baseURL = GlobalProperties.getInstance().getBASE_URL();
     public static Context context = null;
-    
+    AuthService authService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        getSupportActionBar().hide();
         Button logButton = (Button) findViewById(R.id.buttonLogin);
         TextView errorText = (TextView) findViewById(R.id.errorText);
+        authService = AuthService.getInstance(this);
         /**
          * Validator email
          */
@@ -135,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                                         SharedPreferences sh = getSharedPreferences("auth",MODE_PRIVATE);
                                         SharedPreferences.Editor myEdit = sh.edit();
 
-                                        myEdit.putString("firstname", ja.getString("firstname"));
+                                        myEdit.putString("jsondata", ja.toString());
                                         myEdit.commit();
                                         Intent homePage = new Intent(getApplicationContext(), HomeActivity.class);
                                         startActivity(homePage);
@@ -150,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                             if(error instanceof ServerError && response != null) {
                                 try {
                                     String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+
                                     JSONObject object = new JSONObject(res);
                                     errorText.setText(object.getString("message"));
                                     errorText.setVisibility(View.VISIBLE);

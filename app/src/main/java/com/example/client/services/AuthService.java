@@ -31,6 +31,8 @@ public class AuthService {
     Context context;
     private static AuthService authService = null;
 
+    private static User userConnected = null;
+
     public AuthService(Context context) {
         this.context = context;
     }
@@ -46,12 +48,11 @@ public class AuthService {
         return authService;
     }
 
+    public void connectUser(User user){
+        user = user;
+    }
 
-    public void saveUser(String firstname, String lastname, String email, String age, String sexe){
-        try{
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    public static User getUserConnected() {
+        return userConnected;
     }
 }
