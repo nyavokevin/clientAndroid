@@ -11,11 +11,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.client.GlobalProperties;
 import com.example.client.R;
+import com.example.client.models.Cours;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
     View view;
+    ArrayList<Cours> coursArrayList;
+    GlobalProperties properties;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,5 +46,10 @@ public class HomeFragment extends Fragment {
         listView.setAdapter(listViewAdapter);
 
         return  view;
+    }
+
+    public void getCours() {
+    coursArrayList = new ArrayList<>();
+    String url = properties.getBASE_URL() + "/cours";
     }
 }
