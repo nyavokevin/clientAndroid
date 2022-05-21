@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -40,7 +41,7 @@ public class ProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         preferences = this.getActivity().getSharedPreferences("auth", Context.MODE_PRIVATE);
-        setUserInformation();
+
 
         //ADD listener LOUGOUT
         Button button = (Button) view.findViewById(R.id.todoB);
@@ -55,6 +56,19 @@ public class ProfileFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
+        CardView cardView = (CardView) view.findViewById(R.id.learnCard);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HistoireFragment fragment2 = new HistoireFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, fragment2);
+                fragmentTransaction.commit();
+            }
+        });
+
         return  view;
     }
 
