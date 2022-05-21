@@ -45,5 +45,6 @@ dependencies {
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.google.android.material:material:1.2.1'
+    implemetation 'com.github.barteksc:android-pdf-viewer:1.4.0'
 
 }
