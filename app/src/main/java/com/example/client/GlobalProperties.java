@@ -8,6 +8,8 @@ public class GlobalProperties {
     String BASE_URL = "http://192.168.1.144:5000/api";
 
 
+    //ADD User static global
+
     /**
      * Constructor class global
      */

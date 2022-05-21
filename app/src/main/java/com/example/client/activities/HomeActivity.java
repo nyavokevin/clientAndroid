@@ -13,11 +13,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.client.GlobalProperties;
 import com.example.client.MainActivity;
 import com.example.client.R;
 import com.example.client.fragments.HomeFragment;
 import com.example.client.fragments.ProfileFragment;
 import com.example.client.models.User;
+import com.example.client.services.AuthService;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -30,6 +32,8 @@ public class HomeActivity extends AppCompatActivity {
 
     BottomNavigationItemView bottomNavigationItemView;
 
+    boolean checkUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +43,9 @@ public class HomeActivity extends AppCompatActivity {
         Button homeFrag = (Button) findViewById(R.id.homeButton);
         Button profileFrag = (Button) findViewById(R.id.profileButton);
 
-        SharedPreferences sh = getSharedPreferences("auth",MODE_PRIVATE);
-        System.out.println("SHARED");
-        System.out.println(sh.getString("firstname",""));
+        settings = getSharedPreferences("auth",MODE_PRIVATE);
+
+        checkUser = checkUserConnected(settings);
 
         homeFrag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         profileFrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(sh.contains("jsondata")) {
+                if(checkUser) {
                     replaceFragment(new ProfileFragment());
                 }else{
                     Intent loginPage = new Intent(getApplicationContext(), LoginActivity.class);
@@ -100,4 +104,18 @@ public class HomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    /**
+     * fonction pour verifier si un user est deja dans le cache du telephone
+     * @param sh
+     * @return
+     */
+    public Boolean checkUserConnected(SharedPreferences sh){
+        if(sh.contains("jsondata")){
+            return  true;
+        }else{
+            return false;
+        }
+    }
+
 }

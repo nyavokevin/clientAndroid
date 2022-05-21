@@ -137,7 +137,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                         SharedPreferences sh = getSharedPreferences("auth",MODE_PRIVATE);
                                         SharedPreferences.Editor myEdit = sh.edit();
-
+                                        System.out.println("JSON STRING");
+                                        System.out.println(ja.toString());
                                         myEdit.putString("jsondata", ja.toString());
                                         myEdit.commit();
                                         Intent homePage = new Intent(getApplicationContext(), HomeActivity.class);

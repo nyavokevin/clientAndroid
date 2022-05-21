@@ -31,7 +31,7 @@ public class AuthService {
     Context context;
     private static AuthService authService = null;
 
-    private static User userConnected = null;
+    public User userConnected = null;
 
     public AuthService(Context context) {
         this.context = context;
@@ -49,10 +49,7 @@ public class AuthService {
     }
 
     public void connectUser(User user){
-        user = user;
+        userConnected = user;
     }
 
-    public static User getUserConnected() {
-        return userConnected;
-    }
 }
