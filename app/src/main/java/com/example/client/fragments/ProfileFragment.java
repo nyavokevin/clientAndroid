@@ -67,11 +67,12 @@ public class ProfileFragment extends Fragment {
             JSONObject tempRes = new JSONObject(strJSON);
             TextView name = (TextView) view.findViewById(R.id.textView2);
             name.setText(tempRes.get("firstname") + " " + tempRes.get("lastname"));
-
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
+
 
 
 }
