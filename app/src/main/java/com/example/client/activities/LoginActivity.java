@@ -16,14 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.client.GlobalProperties;
 import com.example.client.R;
 import com.example.client.models.User;
 import com.example.client.repository.UserRepository;
+import com.example.client.services.AuthService;
 import com.example.client.utils.VolleySingleton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
@@ -31,6 +35,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,14 +46,16 @@ public class LoginActivity extends AppCompatActivity {
     private String password;
     private static String baseURL = GlobalProperties.getInstance().getBASE_URL();
     public static Context context = null;
-    
+    AuthService authService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        getSupportActionBar().hide();
         Button logButton = (Button) findViewById(R.id.buttonLogin);
         TextView errorText = (TextView) findViewById(R.id.errorText);
+        authService = AuthService.getInstance(this);
         /**
          * Validator email
          */
@@ -126,8 +133,13 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onResponse(JSONObject response) {
                                     try{
                                         JSONObject ja = response.getJSONObject("user");
-                                        Log.e("response", ja.getString("fullname"));
-                                        Toast.makeText(LoginActivity.this, "Logged", Toast.LENGTH_SHORT).show();
+                                        Log.e("response", ja.getString("firstname"));
+
+                                        SharedPreferences sh = getSharedPreferences("auth",MODE_PRIVATE);
+                                        SharedPreferences.Editor myEdit = sh.edit();
+
+                                        myEdit.putString("jsondata", ja.toString());
+                                        myEdit.commit();
                                         Intent homePage = new Intent(getApplicationContext(), HomeActivity.class);
                                         startActivity(homePage);
                                     } catch (JSONException e) {
@@ -137,15 +149,27 @@ public class LoginActivity extends AppCompatActivity {
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                            errorText.setVisibility(View.INVISIBLE);
+                            NetworkResponse response = error.networkResponse;
+                            if(error instanceof ServerError && response != null) {
+                                try {
+                                    String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+
+                                    JSONObject object = new JSONObject(res);
+                                    errorText.setText(object.getString("message"));
+                                    errorText.setVisibility(View.VISIBLE);
+                                }catch (UnsupportedEncodingException e1){
+                                    e1.printStackTrace();
+                                }catch (JSONException e2){
+                                    e2.printStackTrace();
+                                }
+                            }
                         }
                     }){
                         @Override
                         public byte[] getBody(){
                             JSONObject obj = new JSONObject();
                             try {
-                                obj.put("login",String.valueOf(emailTextInput.getText()));
+                                obj.put("email",String.valueOf(emailTextInput.getText()));
                                 obj.put("password",String.valueOf(passwordTextInput.getText()));
                             } catch (JSONException e) {
                                 e.printStackTrace();

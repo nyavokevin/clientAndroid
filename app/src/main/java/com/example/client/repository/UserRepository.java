@@ -32,27 +32,27 @@ public class UserRepository {
      * @param context (l'activité), user (instance d'une classe User)
      * @return
      */
-    public User login(Context context, User user){
-        try{
-            return authService.functionLogin(context, user);
-        }catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public User login(Context context, User user){
+//        try{
+//            return authService.functionLogin(context, user);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
 
 
-    /**
-     * Reposiory login, appel du  fonctionRegister dans le authService
-     * @param context
-     * @param user
-     */
-    public void register(Context context,User user){
-        try{
-            authService.functionRegister(context,user);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * Reposiory login, appel du  fonctionRegister dans le authService
+//     * @param context
+//     * @param user
+//     */
+//    public void register(Context context,User user){
+//        try{
+//            authService.functionRegister(context,user);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 }
