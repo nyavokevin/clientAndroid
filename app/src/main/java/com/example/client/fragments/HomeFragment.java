@@ -16,7 +16,7 @@ import com.example.client.R;
 public class HomeFragment extends Fragment {
 
     View view;
-
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
