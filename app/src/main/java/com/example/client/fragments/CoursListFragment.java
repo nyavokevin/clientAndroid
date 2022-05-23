@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -61,12 +62,27 @@ public class CoursListFragment extends Fragment {
         ListView listView = view.findViewById(R.id.listViewCours);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                CoursListFragment fragment2 = new CoursListFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                Bundle bundle = new Bundle();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                try {
+                    int itemPosition     = position;
+                    // ListView Clicked item value
+                    String  itemValue    = (String)listView.getItemAtPosition(position);
+                    //Put the value
+                    CoursDetailFragment cdf = new CoursDetailFragment();
 
-            }
+                    //Inflate the fragment
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayout, cdf);
+                    Bundle args = new Bundle();
+                    args.putString("nom", itemValue);
+                    cdf.setArguments(args);
+                    fragmentTransaction.commit();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+        }
         });
         return view;
     }
@@ -121,4 +137,5 @@ public class CoursListFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
 }
