@@ -10,9 +10,17 @@
         <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/activity_profile.xml" value="0.1265625" />
         <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/activity_register.xml" value="0.152" />
-        <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/fragment_home.xml" value="0.1265625" />
+        <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/fragment_cours_list.xml" value="0.103125" />
+        <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/fragment_home.xml" value="0.136" />
         <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/layout/fragment_profile.xml" value="0.152" />
         <entry key="..\:/Users/Ny Avo/Client/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1265625" />
+        <entry key="..\:/perso/work/Dev-projects/Android/projets/clientAndroid/app/src/main/res/layout/activity_home.xml" value="0.3087719298245614" />
+        <entry key="..\:/perso/work/Dev-projects/Android/projets/clientAndroid/app/src/main/res/layout/activity_profile.xml" value="0.3087719298245614" />
+        <entry key="..\:/perso/work/Dev-projects/Android/projets/clientAndroid/app/src/main/res/layout/fragment_cours_detail.xml" value="0.3087719298245614" />
+        <entry key="..\:/perso/work/Dev-projects/Android/projets/clientAndroid/app/src/main/res/layout/fragment_cours_list.xml" value="0.3087719298245614" />
+        <entry key="..\:/perso/work/Dev-projects/Android/projets/clientAndroid/app/src/main/res/layout/fragment_histoire.xml" value="0.3087719298245614" />
+        <entry key="..\:/perso/work/Dev-projects/Android/projets/clientAndroid/app/src/main/res/layout/fragment_home.xml" value="0.192481884057971" />
+        <entry key="..\:/perso/work/Dev-projects/Android/projets/clientAndroid/app/src/main/res/layout/fragment_profile.xml" value="0.3087719298245614" />
       </map>
     </option>
   </component>

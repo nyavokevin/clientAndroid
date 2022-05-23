@@ -4,11 +4,14 @@ import android.app.ActionBar;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.client.GlobalProperties;
@@ -52,4 +55,31 @@ public class HomeFragment extends Fragment {
     coursArrayList = new ArrayList<>();
     String url = properties.getBASE_URL() + "/cours";
     }
+
+//        ListView listView = (ListView)view.findViewById(R.id.listeCours);
+//
+//        //adapter pour listeView
+//        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
+//                getActivity(),
+//                android.R.layout.simple_list_item_1,
+//                items
+//        );
+//
+//        listView.setAdapter(listViewAdapter);
+
+        Button buttonCours = (Button) view.findViewById(R.id.coursButton);
+        buttonCours.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                CoursListFragment fragment2 = new CoursListFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, fragment2);
+                fragmentTransaction.commit();
+            }
+        });
+
+    return view;
 }
+
