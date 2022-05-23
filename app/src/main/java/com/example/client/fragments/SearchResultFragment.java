@@ -34,11 +34,7 @@ public class SearchResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         String searchResult = getArguments().getString("key");
-        System.out.println("TEST GET ");
-        System.out.println(searchResult);
-
         view = inflater.inflate(R.layout.fragment_search_result, container, false);
-
         try {
             JSONObject jsonObject = new JSONObject(searchResult);
             JSONArray ja = jsonObject.getJSONArray("transaction");
@@ -47,11 +43,9 @@ public class SearchResultFragment extends Fragment {
                 JSONObject object = ja.getJSONObject(i);
                 list.add(object.getString("nom"));
             }
-            ListView listView = view.findViewById(R.id.listViewCours);
+            ListView listView = view.findViewById(R.id.resultListView);
             CustomAdapter listAdapter = new CustomAdapter(list, getActivity());
             listView.setAdapter(listAdapter);
-
-//            listView.setAdapter(listViewAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
         }
