@@ -117,13 +117,12 @@ public class HomeFragment extends Fragment {
                                         JSONObject object = ja.getJSONObject(i);
                                         list.add(object.getString("nom"));
                                     }
-                                    String responseString = ja.toString();
+                                    String responseString = response.toString();
                                     if(ja.length() > 0) {
                                         Bundle bundle = new Bundle();
                                         bundle.putString("key",responseString);
                                         SearchResultFragment fragment2 = new SearchResultFragment();
                                         fragment2.setArguments(bundle);
-
                                         getFragmentManager()
                                                 .beginTransaction()
                                                 .replace(R.id.frameLayout, fragment2)
