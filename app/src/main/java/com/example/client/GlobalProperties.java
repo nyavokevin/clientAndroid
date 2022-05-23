@@ -12,7 +12,7 @@ public class GlobalProperties extends HomeActivity {
     private static GlobalProperties mGlobalProperty = null;
     private Channel channel;
     //ADD here all Global variable
-    String BASE_URL = "http://192.168.16.103:5000/api";
+    String BASE_URL = "http://192.168.16.102:5000/api";
 
     //ADD User static global
 

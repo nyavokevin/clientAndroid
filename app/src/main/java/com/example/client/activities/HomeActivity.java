@@ -73,29 +73,10 @@ public class HomeActivity extends AppCompatActivity {
 
         Button homeFrag = (Button) findViewById(R.id.homeButton);
         Button profileFrag = (Button) findViewById(R.id.profileButton);
-        Button nitif = (Button) findViewById(R.id.buttonnotification);
+        //Button nitif = (Button) findViewById(R.id.buttonnotification);
         settings = getSharedPreferences("auth", MODE_PRIVATE);
 
         checkUser = checkUserConnected(settings);
-
-        nitif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(HomeActivity.this, "1")
-                            .setSmallIcon(R.drawable.small_icon)
-                            .setContentTitle("textTitle")
-                            .setContentText("textContent")
-                            .setPriority(Notification.PRIORITY_MAX); //Important for heads-up notification
-
-                    Notification buildNotification = mBuilder.build();
-                    NotificationManager mNotifyMgr = (NotificationManager) HomeActivity.this.getSystemService(NOTIFICATION_SERVICE);
-                    mNotifyMgr.notify(001, buildNotification);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
 
         homeFrag.setOnClickListener(new View.OnClickListener() {
             @Override

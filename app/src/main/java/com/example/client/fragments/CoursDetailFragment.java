@@ -58,24 +58,32 @@ public class CoursDetailFragment extends Fragment {
         volleySingleton = VolleySingleton.getInstance(this.getActivity());
         try{
             String nom = getArguments().getString("nom");
-            System.out.print("string:" +nom);
             Log.d("LMAO", "TEST");
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,  baseURL+ "/cours/details/"+nom,null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try{
-                                JSONArray ja = response.getJSONArray("transaction");
+                                System.out.println(response);
+                                JSONObject ja = response.getJSONObject("transaction");
+                                TextView details = view.findViewById(R.id.detailsCours);
+                                TextView cours = view.findViewById(R.id.cours);
+                                cours.setText(ja.getString("nom"));
+                                details.setText(ja.getString("details"));
+
+                                JSONArray lessons = new JSONArray(ja.getString("lessons"));
                                 List<String> list = new ArrayList<String>();
-                                for(int i = 0; i < ja.length();i++){
-                                    JSONObject object = ja.getJSONObject(i);
-                                    list.add(object.getString("details"));
+                                for(int i = 0; i < lessons.length();i++){
+                                    JSONObject object = lessons.getJSONObject(i);
+                                    list.add(object.getString("titre"));
                                 }
-                                TextView textview = view.findViewById(R.id.detailsCours);
-                                System.out.print(textview);
-                                //CustomAdapter listAdapter = new CustomAdapter(list, getActivity());
-                                //textview.setAdapter(listAdapter);
-                            } catch (JSONException e) {
+                                System.out.println(list);
+                                ListView listView = (ListView) view.findViewById(R.id.listViewLessons);
+                                CustomAdapter listAdapter = new CustomAdapter(list, getActivity());
+                                System.out.println(listAdapter);
+                                listView.setAdapter(listAdapter);
+
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
