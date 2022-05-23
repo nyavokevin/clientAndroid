@@ -14,12 +14,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.client.GlobalProperties;
 import com.example.client.R;
+import com.example.client.models.Cours;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
     View view;
-
+    ArrayList<Cours> coursArrayList;
+    GlobalProperties properties;
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,6 +36,25 @@ public class HomeFragment extends Fragment {
         //les donnees recues
         String[] items = {"Coucou***", "texte kely", "texte hafa ara ity"};
 
+
+        ListView listView = (ListView)view.findViewById(R.id.listeCours);
+
+        //adapter pour listeView
+        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_list_item_1,
+                items
+        );
+
+        listView.setAdapter(listViewAdapter);
+
+        return  view;
+    }
+
+    public void getCours() {
+    coursArrayList = new ArrayList<>();
+    String url = properties.getBASE_URL() + "/cours";
+    }
 
 //        ListView listView = (ListView)view.findViewById(R.id.listeCours);
 //
@@ -44,6 +69,7 @@ public class HomeFragment extends Fragment {
 
         Button buttonCours = (Button) view.findViewById(R.id.coursButton);
         buttonCours.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 CoursListFragment fragment2 = new CoursListFragment();
@@ -54,7 +80,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
+    return view;
+}
 
-    return  view;
-}
-}
