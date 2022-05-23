@@ -4,7 +4,9 @@ public class GlobalProperties {
     private static GlobalProperties mGlobalProperty = null;
 
     //ADD here all Global variable
-    String BASE_URL = "http://192.168.16.102:5000/api";
+    //String BASE_URL = "http://192.168.16.102:5000/api";
+    String BASE_URL = "http://192.168.1.144:5000/api";
+
 
     //ADD User static global
 
