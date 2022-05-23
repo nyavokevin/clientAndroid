@@ -63,6 +63,8 @@ public class CoursListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 CoursListFragment fragment2 = new CoursListFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                Bundle bundle = new Bundle();
 
             }
         });

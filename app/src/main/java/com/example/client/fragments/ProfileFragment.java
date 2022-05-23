@@ -41,8 +41,6 @@ public class ProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         preferences = this.getActivity().getSharedPreferences("auth", Context.MODE_PRIVATE);
-
-
         //ADD listener LOUGOUT
         Button button = (Button) view.findViewById(R.id.todoB);
         button.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +75,7 @@ public class ProfileFragment extends Fragment {
      */
     private void setUserInformation(){
         String strJSON = preferences.getString("jsondata","");
+        System.out.println(strJSON);
         try{
             JSONObject tempRes = new JSONObject(strJSON);
             TextView name = (TextView) view.findViewById(R.id.textView2);

@@ -95,8 +95,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
-    return  view;
-}
+        return  view;
+    }
 
     public void search(){
         EditText searchEditText = (EditText) view.findViewById(R.id.editTextSearch);
@@ -117,9 +117,18 @@ public class HomeFragment extends Fragment {
                                         JSONObject object = ja.getJSONObject(i);
                                         list.add(object.getString("nom"));
                                     }
-//                                    ListView listView = view.findViewById(R.id.listViewCours);
-//                                    CustomAdapter listAdapter = new CustomAdapter(list, getActivity());
-//                                    listView.setAdapter(listAdapter);
+                                    String responseString = ja.toString();
+                                    if(ja.length() > 0) {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("key",responseString);
+                                        SearchResultFragment fragment2 = new SearchResultFragment();
+                                        fragment2.setArguments(bundle);
+
+                                        getFragmentManager()
+                                                .beginTransaction()
+                                                .replace(R.id.frameLayout, fragment2)
+                                                .commit();
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
