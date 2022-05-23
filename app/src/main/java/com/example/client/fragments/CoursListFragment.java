@@ -66,9 +66,9 @@ public class CoursListFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 Bundle bundle = new Bundle();
 
-                String selected = ge;
-                bundle.putString("param1", a);
-                fragment2.setArgument(bundle);
+                // String selected = ge;
+                // bundle.putString("param1", a);
+                // fragment2.setArgument(bundle);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frameLayout, fragment2);
                 fragmentTransaction.commit();

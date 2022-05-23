@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
         String[] items = {"Coucou***", "texte kely", "texte hafa ara ity"};
 
 
-        ListView listView = (ListView)view.findViewById(R.id.listeCours);
+        //ListView listView = (ListView)view.findViewById(R.id.listeCours);
 
         //adapter pour listeView
         ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
@@ -46,15 +46,15 @@ public class HomeFragment extends Fragment {
                 items
         );
 
-        listView.setAdapter(listViewAdapter);
+        //listView.setAdapter(listViewAdapter);
 
-        return  view;
-    }
+        //return  view;
+   // }
 
-    public void getCours() {
-    coursArrayList = new ArrayList<>();
-    String url = properties.getBASE_URL() + "/cours";
-    }
+  //  public void getCours() {
+  //  coursArrayList = new ArrayList<>();
+ //   String url = properties.getBASE_URL() + "/cours";
+  //  }
 
 //        ListView listView = (ListView)view.findViewById(R.id.listeCours);
 //
@@ -67,19 +67,19 @@ public class HomeFragment extends Fragment {
 //
 //        listView.setAdapter(listViewAdapter);
 
-        Button buttonCours = (Button) view.findViewById(R.id.coursButton);
+       Button buttonCours = (Button) view.findViewById(R.id.coursButton);
         buttonCours.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                CoursListFragment fragment2 = new CoursListFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, fragment2);
-                fragmentTransaction.commit();
+               CoursListFragment fragment2 = new CoursListFragment();
+               FragmentManager fragmentManager = getFragmentManager();
+               FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+               fragmentTransaction.replace(R.id.frameLayout, fragment2);
+               fragmentTransaction.commit();
             }
         });
-
     return view;
+    }
 }
 
